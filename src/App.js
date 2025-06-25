@@ -6,8 +6,10 @@ import ListaGastos from './Components/ListaGastos';
 function App() {
     const [gastos, setGastos] = useState(() => {
       const gastosGuardados = localStorage.getItem('gastos');
+      //Si existen los datosGuardados en local storage, los parsea en el array, si no devuelve un array vacio.
       return gastosGuardados ? JSON.parse(gastosGuardados) : [];
     });
+    
   //LEER gastos, se ejecuta al cargar el componente
   useEffect(() => {
     const gastosGuardados = localStorage.getItem('gastos');
@@ -36,18 +38,11 @@ const borrarGasto = (id) => {
 
 //ACTUALIZAR, recibe una id y el gasto actualizado y remplaza el gasto correspondiente
 const actualizarGasto = (id, gastoActualizado) => {
-  console.log('Función updateExpense en App.js recibiendo:');
-  console.log('ID:', id, typeof id);
-  console.log('Datos a actualizar:', gastoActualizado);
 
   setGastos(prevGastos =>
     prevGastos.map(gasto => {
-      // --- PUNTO DE CONTROL 3 ---
-      // Esto se mostrará por cada item en tu lista
-      console.log(`Comparando: ${gasto.id} === ${id} -> ${gasto.id === id}`);
 
       if (gasto.id === id) {
-        console.log('¡Coincidencia encontrada! Actualizando item...');
         return { ...gasto, ...gastoActualizado };
       }
       return gasto;
@@ -58,12 +53,12 @@ const actualizarGasto = (id, gastoActualizado) => {
   return (
     <div className="app-container">
       <h1>Registro de Gastos</h1>
-    <FormularioGasto alAgregarGasto={agregarGasto} />
-    <ListaGastos
+      <FormularioGasto alAgregarGasto={agregarGasto} />
+      <ListaGastos
       gastos={gastos}
       alBorrarGasto={borrarGasto}
       alActualizarGasto={actualizarGasto}
-    />
+      />
     </div>
   );
 }

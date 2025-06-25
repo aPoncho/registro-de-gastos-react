@@ -7,10 +7,20 @@ function FormularioGasto({alAgregarGasto}) {
     const manejarSubmit = (event) => {
         //Esto es para evitar que se recargue la pagina al enviar el formulario
         event.preventDefault();
+        let string_cantidad = cantidad.toString();   
 
         //Validacion para no enviar gastos vacios
-        if (!descripcion || !cantidad || cantidad < 1) {
+        if (!descripcion || !cantidad) {
             alert('Por favor completar ambos campos');
+            return;
+        } else if (cantidad < 1) { //Validacion para evitar cantidades menores a 1
+            alert('La cantidad debe ser un numero positivo');
+            return;
+        } else if (descripcion.length > 30) { //Validacion para largo de descripcion mayor a 30
+            alert('Por favor ingrese una descripcion no mayor a 30 caracteres');
+            return;
+        } else if (string_cantidad.length > 9){ //Validacion para largo de cantidad mayor a 9
+            alert('Por favor ingrese una cantidad no mayor a 9 numeros');
             return;
         }
 
